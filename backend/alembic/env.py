@@ -25,6 +25,14 @@ from app.core.config import settings
 import app.organizations.models
 import app.users.models
 import app.crm.models
+import app.hr.models
+import app.projects.models
+import app.finance.models
+import app.documents.models
+import app.meetings.models
+import app.support.models
+import app.notifications.models
+import app.marketing.models
 
 target_metadata = Base.metadata
 

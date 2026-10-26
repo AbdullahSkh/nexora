@@ -120,3 +120,15 @@ async def test_get_me_without_token_returns_401(async_client):
 async def test_get_me_with_invalid_token_returns_401(async_client):
     resp = await async_client.get(ME_URL, headers={"Authorization": "Bearer invalidtoken"})
     assert resp.status_code == 401
+
+
+@pytest.mark.asyncio
+async def test_get_auth_me_with_valid_token(async_client):
+    reg_resp = await _register(async_client, email="auth_me_test@acme.com")
+    token = reg_resp.json()["access_token"]
+    resp = await async_client.get("/api/v1/auth/me", headers={"Authorization": f"Bearer {token}"})
+    assert resp.status_code == 200
+    data = resp.json()
+    assert data["email"] == "auth_me_test@acme.com"
+    assert data["is_superuser"] is True
+
